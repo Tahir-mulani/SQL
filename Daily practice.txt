@@ -1,0 +1,357 @@
+mysql> SHOW DATABASES;
++-------------------------+
+| Database                |
++-------------------------+
+| airline                 |
+| airlinemanagementsystem |
+| college                 |
+| company                 |
+| gth                     |
+| information_schema      |
+| mysql                   |
+| performance_schema      |
+| startersql              |
+| student_db              |
+| student_details         |
+| student_management      |
+| sys                     |
+| team                    |
++-------------------------+
+14 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE PRACTICE;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE PRACTICE;
+Database changed
+mysql> CREATE TABLE student (
+    ->     Sid INT(5) PRIMARY KEY AUTO_INCREMENT,
+    ->     Name VARCHAR(50) NOT NULL,
+    ->     email VARCHAR(50) UNIQUE NOT NULL,
+    ->     contact VARCHAR(10) UNIQUE NOT NULL,
+    ->     age INT,
+    ->     CHECK(age > 6),
+    ->     state VARCHAR(50) DEFAULT 'Maharashtra'
+    -> );
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> INSERT INTO student(Name,email,contact,age) VALUES
+    -> ('Tahir','tahirmulani7447@gmail.com','7083560700',21),
+    -> ('Gokul','gokulbhor@gmail.com','9865482635',23),
+    -> ('Yadnynesh','yd@gmail.com','8473958349',24),
+    -> ('Omkar','omkar@gmail.com','9839478238',22),
+    -> ('Aniket','aniket@gmail.com','6538956420',24),
+    -> ('Siddharth','siddharth@gmail.com','8265489530',23);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENT;
++-----+-----------+---------------------------+------------+------+-------------+
+| Sid | Name      | email                     | contact    | age  | state       |
++-----+-----------+---------------------------+------------+------+-------------+
+|   1 | Tahir     | tahirmulani7447@gmail.com | 7083560700 |   21 | Maharashtra |
+|   2 | Gokul     | gokulbhor@gmail.com       | 9865482635 |   23 | Maharashtra |
+|   3 | Yadnynesh | yd@gmail.com              | 8473958349 |   24 | Maharashtra |
+|   4 | Omkar     | omkar@gmail.com           | 9839478238 |   22 | Maharashtra |
+|   5 | Aniket    | aniket@gmail.com          | 6538956420 |   24 | Maharashtra |
+|   6 | Siddharth | siddharth@gmail.com       | 8265489530 |   23 | Maharashtra |
++-----+-----------+---------------------------+------------+------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUDENT WHERE Sid = 6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> UPDATE STUDENT SET Name = 'Tahir Mulani',email = 'tahirmulani7447@gmail.com',contact = '7020363693' WHERE Sid = 1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> CREATE TABLE Company(cid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) UNIQUE NOT NULL,Contact VARCHAR(10) UNIQUE,Website VARCHAR(50) UNIQUE NOT NULL);
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> CREATE TABLE Product(Pid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) NOT NULL,Price VARCHAR(100) NOT NULL,cid INT, FOREIGN KEY(cid) REFERENCES company(cid));
+Query OK, 0 rows affected (0.10 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> CREATE TABLE Product(Pid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) NOT NULL,Price VARCHAR(100) NOT NULL,cid INT, FOREIGN KEY(cid) REFERENCES company(cid) ON DELETE CASCADE ON UPDATE CASCADE);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> CREATE TABLE EMPLOYEE(Eid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) UNIQUE NOT NULL,Salary INT(10) NOT NULL);
+Query OK, 0 rows affected, 1 warning (0.07 sec)
+
+mysql> INSERT INTO EMPLOYEE(Name,Salary)VALUES('Amol',65000),('Amit',5000),('Summit',10000),('Omkar',30000),('Lakhan',20000),('Om',3000),('Ganesh',6000),('Gokul',80000),('Aniket',40000),('Siddharth',50000),('Tahir',25000),('Yadnyesh',90000);
+Query OK, 12 rows affected (0.03 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE WHERE Salary > 5000 AND Salary < 20000;
++-----+--------+--------+
+| Eid | Name   | Salary |
++-----+--------+--------+
+|   3 | Summit |  10000 |
+|   7 | Ganesh |   6000 |
++-----+--------+--------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE Salary = 5000 OR Salary = 20000;
++-----+--------+--------+
+| Eid | Name   | Salary |
++-----+--------+--------+
+|   2 | Amit   |   5000 |
+|   5 | Lakhan |  20000 |
++-----+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE Salary != 5000 AND Salary != 20000;
++-----+-----------+--------+
+| Eid | Name      | Salary |
++-----+-----------+--------+
+|   1 | Amol      |  65000 |
+|   3 | Summit    |  10000 |
+|   4 | Omkar     |  30000 |
+|   6 | Om        |   3000 |
+|   7 | Ganesh    |   6000 |
+|   8 | Gokul     |  80000 |
+|   9 | Aniket    |  40000 |
+|  10 | Siddharth |  50000 |
+|  11 | Tahir     |  25000 |
+|  12 | Yadnyesh  |  90000 |
++-----+-----------+--------+
+10 rows in set (0.00 sec)
+
+
+mysql> SELECT * FROM EMPLOYEE ORDER BY Salary ASC;
++-----+-----------+--------+
+| Eid | Name      | Salary |
++-----+-----------+--------+
+|   6 | Om        |   3000 |
+|   2 | Amit      |   5000 |
+|   7 | Ganesh    |   6000 |
+|   3 | Summit    |  10000 |
+|   5 | Lakhan    |  20000 |
+|  11 | Tahir     |  25000 |
+|   4 | Omkar     |  30000 |
+|   9 | Aniket    |  40000 |
+|  10 | Siddharth |  50000 |
+|   1 | Amol      |  65000 |
+|   8 | Gokul     |  80000 |
+|  12 | Yadnyesh  |  90000 |
++-----+-----------+--------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE ORDER BY Salary DESC;
++-----+-----------+--------+
+| Eid | Name      | Salary |
++-----+-----------+--------+
+|  12 | Yadnyesh  |  90000 |
+|   8 | Gokul     |  80000 |
+|   1 | Amol      |  65000 |
+|  10 | Siddharth |  50000 |
+|   9 | Aniket    |  40000 |
+|   4 | Omkar     |  30000 |
+|  11 | Tahir     |  25000 |
+|   5 | Lakhan    |  20000 |
+|   3 | Summit    |  10000 |
+|   7 | Ganesh    |   6000 |
+|   2 | Amit      |   5000 |
+|   6 | Om        |   3000 |
++-----+-----------+--------+
+12 rows in set (0.05 sec)
+
+mysql> SELECT Salary FROM EMPLOYEE  WHERE Eid > 6 ORDER BY Salary ASC;
++--------+
+| Salary |
++--------+
+|   6000 |
+|  25000 |
+|  40000 |
+|  50000 |
+|  80000 |
+|  90000 |
++--------+
+6 rows in set (0.03 sec)
+6 rows in set (0.03 sec)
+
+mysql> SELECT Salary FROM EMPLOYEE WHERE Salary != 5000 ORDER BY Salary ASC;
++--------+
+| Salary |
++--------+
+|   3000 |
+|   6000 |
+|  10000 |
+|  20000 |
+|  25000 |
+|  30000 |
+|  40000 |
+|  50000 |
+|  65000 |
+|  80000 |
+|  90000 |
++--------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT Salary FROM EMPLOYEE WHERE Salary BETWEEN 3000 AND 20000;
++--------+
+| Salary |
++--------+
+|   5000 |
+|  10000 |
+|  20000 |
+|   3000 |
+|   6000 |
++--------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE Eid IN(1,5,9,11);
++-----+--------+--------+
+| Eid | Name   | Salary |
++-----+--------+--------+
+|   1 | Amol   |  65000 |
+|   5 | Lakhan |  20000 |
+|   9 | Aniket |  40000 |
+|  11 | Tahir  |  25000 |
++-----+--------+--------+
+4 rows in set (0.02 sec)
+
+mysql> CREATE DATABASE TEAM;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE TEAM;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> CREATE TABLE player(pid INT PRIMARY KEY,pname VARCHAR(50),state VARCHAR(50),runs INT,salary INT);
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> INSERT INTO player VALUES
+    -> (1,'Rohit','Maharashtra',18000,50000),
+    -> (2,'Virat','Delhi',22000,60000),
+    -> (3,'Hardik','Gujarat',15000,45000),
+    -> (4,'Shubham','Punjab',12000,30000),
+    -> (5,'Surya','Maharashtra',9000,25000),
+    -> (6,'KL Rahul','Punjab',14000,35000),
+    -> (7,'Jadeja','Gujarat',11000,40000),
+    -> (8,'Ishan','Delhi',8000,20000),
+    -> (9,'Shreyas','Maharashtra',6000,18000),
+    -> (10,'Ruturaj','Maharashtra',7000,22000),
+    -> (11,'Gill','Punjab',13000,38000),
+    -> (12,'Pant','Delhi',10000,32000),
+    -> (13,'Bumrah','Gujarat',9000,27000),
+    -> (14,'Axar','Delhi',5000,15000),
+    -> (15,'Rahane','Maharashtra',4000,12000),
+    -> (16,'Dawan','Punjab',3000,10000),
+    -> (17,'Tiwari','Maharashtra',2500,9000),
+    -> (18,'Chahal','Gujarat',2000,8000),
+    -> (19,'Kuldeep','Delhi',3500,11000),
+    -> (20,'Pujara','Gujarat',16000,42000);
+Query OK, 20 rows affected (0.02 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM player WHERE state = 'Maharashtra';
++-----+---------+-------------+-------+--------+
+| pid | pname   | state       | runs  | salary |
++-----+---------+-------------+-------+--------+
+|   1 | Rohit   | Maharashtra | 18000 |  50000 |
+|   5 | Surya   | Maharashtra |  9000 |  25000 |
+|   9 | Shreyas | Maharashtra |  6000 |  18000 |
+|  10 | Ruturaj | Maharashtra |  7000 |  22000 |
+|  15 | Rahane  | Maharashtra |  4000 |  12000 |
+|  17 | Tiwari  | Maharashtra |  2500 |   9000 |
++-----+---------+-------------+-------+--------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT*FROM player WHERE state IN('Maharashtra','Punjab','gujrat','Delhi');
++-----+----------+-------------+-------+--------+
+| pid | pname    | state       | runs  | salary |
++-----+----------+-------------+-------+--------+
+|   1 | Rohit    | Maharashtra | 18000 |  50000 |
+|   2 | Virat    | Delhi       | 22000 |  60000 |
+|   4 | Shubham  | Punjab      | 12000 |  30000 |
+|   5 | Surya    | Maharashtra |  9000 |  25000 |
+|   6 | KL Rahul | Punjab      | 14000 |  35000 |
+|   8 | Ishan    | Delhi       |  8000 |  20000 |
+|   9 | Shreyas  | Maharashtra |  6000 |  18000 |
+|  10 | Ruturaj  | Maharashtra |  7000 |  22000 |
+|  11 | Gill     | Punjab      | 13000 |  38000 |
+|  12 | Pant     | Delhi       | 10000 |  32000 |
+|  14 | Axar     | Delhi       |  5000 |  15000 |
+|  15 | Rahane   | Maharashtra |  4000 |  12000 |
+|  16 | Dawan    | Punjab      |  3000 |  10000 |
+|  17 | Tiwari   | Maharashtra |  2500 |   9000 |
+|  19 | Kuldeep  | Delhi       |  3500 |  11000 |
++-----+----------+-------------+-------+--------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT*FROM player WHERE runs ORDER BY runs DESC;
++-----+----------+-------------+-------+--------+
+| pid | pname    | state       | runs  | salary |
++-----+----------+-------------+-------+--------+
+|   2 | Virat    | Delhi       | 22000 |  60000 |
+|   1 | Rohit    | Maharashtra | 18000 |  50000 |
+|  20 | Pujara   | Gujarat     | 16000 |  42000 |
+|   3 | Hardik   | Gujarat     | 15000 |  45000 |
+|   6 | KL Rahul | Punjab      | 14000 |  35000 |
+|  11 | Gill     | Punjab      | 13000 |  38000 |
+|   4 | Shubham  | Punjab      | 12000 |  30000 |
+|   7 | Jadeja   | Gujarat     | 11000 |  40000 |
+|  12 | Pant     | Delhi       | 10000 |  32000 |
+|   5 | Surya    | Maharashtra |  9000 |  25000 |
+|  13 | Bumrah   | Gujarat     |  9000 |  27000 |
+|   8 | Ishan    | Delhi       |  8000 |  20000 |
+|  10 | Ruturaj  | Maharashtra |  7000 |  22000 |
+|   9 | Shreyas  | Maharashtra |  6000 |  18000 |
+|  14 | Axar     | Delhi       |  5000 |  15000 |
+|  15 | Rahane   | Maharashtra |  4000 |  12000 |
+|  19 | Kuldeep  | Delhi       |  3500 |  11000 |
+|  16 | Dawan    | Punjab      |  3000 |  10000 |
+|  17 | Tiwari   | Maharashtra |  2500 |   9000 |
+|  18 | Chahal   | Gujarat     |  2000 |   8000 |
++-----+----------+-------------+-------+--------+
+20 rows in set (0.00 sec)
+
+mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs > 2000;
++-----+---------+-------------+-------+--------+
+| pid | pname   | state       | runs  | salary |
++-----+---------+-------------+-------+--------+
+|   1 | Rohit   | Maharashtra | 18000 |  50000 |
+|   5 | Surya   | Maharashtra |  9000 |  25000 |
+|   9 | Shreyas | Maharashtra |  6000 |  18000 |
+|  10 | Ruturaj | Maharashtra |  7000 |  22000 |
+|  15 | Rahane  | Maharashtra |  4000 |  12000 |
+|  17 | Tiwari  | Maharashtra |  2500 |   9000 |
++-----+---------+-------------+-------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs BETWEEN 2000 AND 20000 ORDER BY runs DESC;
++-----+---------+-------------+-------+--------+
+| pid | pname   | state       | runs  | salary |
++-----+---------+-------------+-------+--------+
+|   1 | Rohit   | Maharashtra | 18000 |  50000 |
+|   5 | Surya   | Maharashtra |  9000 |  25000 |
+|  10 | Ruturaj | Maharashtra |  7000 |  22000 |
+|   9 | Shreyas | Maharashtra |  6000 |  18000 |
+|  15 | Rahane  | Maharashtra |  4000 |  12000 |
+|  17 | Tiwari  | Maharashtra |  2500 |   9000 |
++-----+---------+-------------+-------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*FROM player WHERE state != 'Maharashtra';
++-----+----------+---------+-------+--------+
+| pid | pname    | state   | runs  | salary |
++-----+----------+---------+-------+--------+
+|   2 | Virat    | Delhi   | 22000 |  60000 |
+|   3 | Hardik   | Gujarat | 15000 |  45000 |
+|   4 | Shubham  | Punjab  | 12000 |  30000 |
+|   6 | KL Rahul | Punjab  | 14000 |  35000 |
+|   7 | Jadeja   | Gujarat | 11000 |  40000 |
+|   8 | Ishan    | Delhi   |  8000 |  20000 |
+|  11 | Gill     | Punjab  | 13000 |  38000 |
+|  12 | Pant     | Delhi   | 10000 |  32000 |
+|  13 | Bumrah   | Gujarat |  9000 |  27000 |
+|  14 | Axar     | Delhi   |  5000 |  15000 |
+|  16 | Dawan    | Punjab  |  3000 |  10000 |
+|  18 | Chahal   | Gujarat |  2000 |   8000 |
+|  19 | Kuldeep  | Delhi   |  3500 |  11000 |
+|  20 | Pujara   | Gujarat | 16000 |  42000 |
++-----+----------+---------+-------+--------+
+14 rows in set (0.00 sec)
+
+
