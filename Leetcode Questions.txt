@@ -1,4 +1,4 @@
-    -- Leetcode Solved Questions --
+                 -- Leetcode Solved Questions --
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 
 Q.595
@@ -7,4 +7,43 @@ Q.595
 SELECT name,population,area FROM world 
 WHERE 
 (area >= 3000000 OR population >= 25000000);
-=================================================
+
+==================================================================
+
+Q.182
+(Duplicate Emails)
+
+SELECT email FROM Person GROUP BY email HAVING COUNT(*)>1;
+
+===================================================================
+
+Q.172
+(Combine Two Tables)
+
+SELECT firstName, lastName, city, state
+FROM Person
+LEFT JOIN Address ON Person.personId = Address.personId
+
+==================================================================
+
+Q.181
+(Employees Earning More Than Their Managers)
+SELECT e.name AS Employee
+FROM Employee e
+JOIN Employee m
+ON e.managerId = m.id
+WHERE e.salary > m.salary;
+
+===================================================================
+
+Q.595
+(Big Countries)
+SELECT name,population,area FROM world
+WHERE (area >= 3000000 OR population >=25000000);
+
+=============================================================================
+
+Q.584
+(Find Customer Refree)
+SELECT name FROM Customer
+WHERE referee_id!=2 OR referee_id is null;
