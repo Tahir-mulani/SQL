@@ -19,11 +19,14 @@ mysql> SHOW DATABASES;
 +-------------------------+
 14 rows in set (0.00 sec)
 
+Q. Create the new database name as practice
 mysql> CREATE DATABASE PRACTICE;
 Query OK, 1 row affected (0.01 sec)
 
 mysql> USE PRACTICE;
 Database changed
+
+Q. Create the table name as student with following column and constraints
 mysql> CREATE TABLE student (
     ->     Sid INT(5) PRIMARY KEY AUTO_INCREMENT,
     ->     Name VARCHAR(50) NOT NULL,
@@ -35,6 +38,7 @@ mysql> CREATE TABLE student (
     -> );
 Query OK, 0 rows affected, 1 warning (0.04 sec)
 
+Q. Write SQL Statement to insert the five records in student table?
 mysql> INSERT INTO student(Name,email,contact,age) VALUES
     -> ('Tahir','tahirmulani7447@gmail.com','7083560700',21),
     -> ('Gokul','gokulbhor@gmail.com','9865482635',23),
@@ -45,6 +49,7 @@ mysql> INSERT INTO student(Name,email,contact,age) VALUES
 Query OK, 6 rows affected (0.01 sec)
 Records: 6  Duplicates: 0  Warnings: 0
 
+Q. Shows the all student records?
 mysql> SELECT*FROM STUDENT;
 +-----+-----------+---------------------------+------------+------+-------------+
 | Sid | Name      | email                     | contact    | age  | state       |
@@ -58,20 +63,29 @@ mysql> SELECT*FROM STUDENT;
 +-----+-----------+---------------------------+------------+------+-------------+
 6 rows in set (0.00 sec)
 
+Q. Write SQL Statement to delete the record from table using student id?
 mysql> DELETE FROM STUDENT WHERE Sid = 6;
 Query OK, 1 row affected (0.01 sec)
 
+Q. Write to update the student email and contact and name using its id?
 mysql> UPDATE STUDENT SET Name = 'Tahir Mulani',email = 'tahirmulani7447@gmail.com',contact = '7020363693' WHERE Sid = 1;
 Query OK, 1 row affected (0.01 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
+Q. Shows the student record using its id?
+mysql> SELECT*FROM student WHERE Sid = 1;
++-----+--------------+---------------------------+------------+------+-------------+
+| Sid | Name         | email                     | contact    | age  | state       |
++-----+--------------+---------------------------+------------+------+-------------+
+|   1 | Tahir Mulani | tahirmulani7447@gmail.com | 7020363693 |   21 | Maharashtra |
++-----+--------------+---------------------------+------------+------+-------------+
+1 row in set (0.00 sec)
+
+
+Q. Create the two tables name As Company and product?
 mysql> CREATE TABLE Company(cid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) UNIQUE NOT NULL,Contact VARCHAR(10) UNIQUE,Website VARCHAR(50) UNIQUE NOT NULL);
 Query OK, 0 rows affected (0.14 sec)
 
-mysql> CREATE TABLE Product(Pid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) NOT NULL,Price VARCHAR(100) NOT NULL,cid INT, FOREIGN KEY(cid) REFERENCES company(cid));
-Query OK, 0 rows affected (0.10 sec)
-
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
 mysql> CREATE TABLE Product(Pid INT PRIMARY KEY AUTO_INCREMENT,Name VARCHAR(50) NOT NULL,Price VARCHAR(100) NOT NULL,cid INT, FOREIGN KEY(cid) REFERENCES company(cid) ON DELETE CASCADE ON UPDATE CASCADE);
 Query OK, 0 rows affected (0.06 sec)
 
@@ -82,6 +96,7 @@ mysql> INSERT INTO EMPLOYEE(Name,Salary)VALUES('Amol',65000),('Amit',5000),('Sum
 Query OK, 12 rows affected (0.03 sec)
 Records: 12  Duplicates: 0  Warnings: 0
 
+Q. WASQL Query to display the record of employee whose salary is greater than 5000 and less than 20000
 mysql> SELECT * FROM EMPLOYEE WHERE Salary > 5000 AND Salary < 20000;
 +-----+--------+--------+
 | Eid | Name   | Salary |
@@ -91,6 +106,7 @@ mysql> SELECT * FROM EMPLOYEE WHERE Salary > 5000 AND Salary < 20000;
 +-----+--------+--------+
 2 rows in set (0.01 sec)
 
+Q.  WASQL query to display the record of employee whose salary is 5000 or 20000
 mysql> SELECT * FROM EMPLOYEE WHERE Salary = 5000 OR Salary = 20000;
 +-----+--------+--------+
 | Eid | Name   | Salary |
@@ -100,6 +116,7 @@ mysql> SELECT * FROM EMPLOYEE WHERE Salary = 5000 OR Salary = 20000;
 +-----+--------+--------+
 2 rows in set (0.00 sec)
 
+Q.  WASQL query to display the record of employee whose salary is not 5000 and 20000
 mysql> SELECT * FROM EMPLOYEE WHERE Salary != 5000 AND Salary != 20000;
 +-----+-----------+--------+
 | Eid | Name      | Salary |
@@ -118,6 +135,7 @@ mysql> SELECT * FROM EMPLOYEE WHERE Salary != 5000 AND Salary != 20000;
 10 rows in set (0.00 sec)
 
 
+Q. WASQL Query to display the employee record by salary using ascending order
 mysql> SELECT * FROM EMPLOYEE ORDER BY Salary ASC;
 +-----+-----------+--------+
 | Eid | Name      | Salary |
@@ -137,6 +155,7 @@ mysql> SELECT * FROM EMPLOYEE ORDER BY Salary ASC;
 +-----+-----------+--------+
 12 rows in set (0.00 sec)
 
+Q. WASQL Query to display the employee record by salary using descending order
 mysql> SELECT * FROM EMPLOYEE ORDER BY Salary DESC;
 +-----+-----------+--------+
 | Eid | Name      | Salary |
@@ -156,6 +175,7 @@ mysql> SELECT * FROM EMPLOYEE ORDER BY Salary DESC;
 +-----+-----------+--------+
 12 rows in set (0.05 sec)
 
+Q. WASQL Query to display the salary in ascending order of employee whose id greater than 6
 mysql> SELECT Salary FROM EMPLOYEE  WHERE Eid > 6 ORDER BY Salary ASC;
 +--------+
 | Salary |
@@ -170,6 +190,7 @@ mysql> SELECT Salary FROM EMPLOYEE  WHERE Eid > 6 ORDER BY Salary ASC;
 6 rows in set (0.03 sec)
 6 rows in set (0.03 sec)
 
+Q. WASQL Query to display the salary in ascending order except the salary 5000
 mysql> SELECT Salary FROM EMPLOYEE WHERE Salary != 5000 ORDER BY Salary ASC;
 +--------+
 | Salary |
@@ -188,6 +209,7 @@ mysql> SELECT Salary FROM EMPLOYEE WHERE Salary != 5000 ORDER BY Salary ASC;
 +--------+
 11 rows in set (0.00 sec)
 
+Q. WASQL Query to display the salary in ascending order between 3000 to 20000?
 mysql> SELECT Salary FROM EMPLOYEE WHERE Salary BETWEEN 3000 AND 20000;
 +--------+
 | Salary |
@@ -200,6 +222,7 @@ mysql> SELECT Salary FROM EMPLOYEE WHERE Salary BETWEEN 3000 AND 20000;
 +--------+
 5 rows in set (0.01 sec)
 
+Q. WASQL Query to display the record of employee whose id is 1, 5, 9, and 11?
 mysql> SELECT*FROM EMPLOYEE WHERE Eid IN(1,5,9,11);
 +-----+--------+--------+
 | Eid | Name   | Salary |
@@ -211,16 +234,18 @@ mysql> SELECT*FROM EMPLOYEE WHERE Eid IN(1,5,9,11);
 +-----+--------+--------+
 4 rows in set (0.02 sec)
 
+Create database name as team and create the following table in it
 mysql> CREATE DATABASE TEAM;
 Query OK, 1 row affected (0.01 sec)
 
 mysql> USE TEAM;
 Query OK, 1 row affected (0.01 sec)
 
+
 mysql> CREATE TABLE player(pid INT PRIMARY KEY,pname VARCHAR(50),state VARCHAR(50),runs INT,salary INT);
 Query OK, 0 rows affected (0.03 sec)
 
-
+Insert the 20 player’s record in table and perform following task
 mysql> INSERT INTO player VALUES
     -> (1,'Rohit','Maharashtra',18000,50000),
     -> (2,'Virat','Delhi',22000,60000),
@@ -245,6 +270,7 @@ mysql> INSERT INTO player VALUES
 Query OK, 20 rows affected (0.02 sec)
 Records: 20  Duplicates: 0  Warnings: 0
 
+Q. WASQL Query show the player records whose state is Maharashtra
 mysql> SELECT*FROM player WHERE state = 'Maharashtra';
 +-----+---------+-------------+-------+--------+
 | pid | pname   | state       | runs  | salary |
@@ -258,6 +284,7 @@ mysql> SELECT*FROM player WHERE state = 'Maharashtra';
 +-----+---------+-------------+-------+--------+
 6 rows in set (0.01 sec)
 
+Q. WASQL Query show the player records whose state is Maharashtra, Punjab, gujrat and Delhi?
 mysql> SELECT*FROM player WHERE state IN('Maharashtra','Punjab','gujrat','Delhi');
 +-----+----------+-------------+-------+--------+
 | pid | pname    | state       | runs  | salary |
@@ -280,6 +307,7 @@ mysql> SELECT*FROM player WHERE state IN('Maharashtra','Punjab','gujrat','Delhi'
 +-----+----------+-------------+-------+--------+
 15 rows in set (0.00 sec)
 
+Q. WASQL Query show the player record run wise in descending order
 mysql> SELECT*FROM player WHERE runs ORDER BY runs DESC;
 +-----+----------+-------------+-------+--------+
 | pid | pname    | state       | runs  | salary |
@@ -307,6 +335,7 @@ mysql> SELECT*FROM player WHERE runs ORDER BY runs DESC;
 +-----+----------+-------------+-------+--------+
 20 rows in set (0.00 sec)
 
+Q. WASQL Query shows the player record whose state is Maharashtra and run record greater than 2000
 mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs > 2000;
 +-----+---------+-------------+-------+--------+
 | pid | pname   | state       | runs  | salary |
@@ -320,6 +349,8 @@ mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs > 2000;
 +-----+---------+-------------+-------+--------+
 6 rows in set (0.00 sec)
 
+Q.WASQL Query shows the player record whose state is Maharashtra and 
+run record between 2000 to 20000 and display player record in descending order
 mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs BETWEEN 2000 AND 20000 ORDER BY runs DESC;
 +-----+---------+-------------+-------+--------+
 | pid | pname   | state       | runs  | salary |
@@ -333,6 +364,7 @@ mysql> SELECT*FROM player WHERE state = 'Maharashtra' AND runs BETWEEN 2000 AND 
 +-----+---------+-------------+-------+--------+
 6 rows in set (0.00 sec)
 
+Q  WASQL Query show the player record whose state is not Maharashtra
 mysql> SELECT*FROM player WHERE state != 'Maharashtra';
 +-----+----------+---------+-------+--------+
 | pid | pname    | state   | runs  | salary |
@@ -353,5 +385,28 @@ mysql> SELECT*FROM player WHERE state != 'Maharashtra';
 |  20 | Pujara   | Gujarat | 16000 |  42000 |
 +-----+----------+---------+-------+--------+
 14 rows in set (0.00 sec)
+
+Q.  WASQL Query show the player record whose state is not maharastra, Punjab and Delhi
+mysql> SELECT*FROM player WHERE state NOT IN('Maharastra','Punjab','Delhi');
++-----+---------+-------------+-------+--------+
+| pid | pname   | state       | runs  | salary |
++-----+---------+-------------+-------+--------+
+|   1 | Rohit   | Maharashtra | 18000 |  50000 |
+|   3 | Hardik  | Gujarat     | 15000 |  45000 |
+|   5 | Surya   | Maharashtra |  9000 |  25000 |
+|   7 | Jadeja  | Gujarat     | 11000 |  40000 |
+|   9 | Shreyas | Maharashtra |  6000 |  18000 |
+|  10 | Ruturaj | Maharashtra |  7000 |  22000 |
+|  13 | Bumrah  | Gujarat     |  9000 |  27000 |
+|  15 | Rahane  | Maharashtra |  4000 |  12000 |
+|  17 | Tiwari  | Maharashtra |  2500 |   9000 |
+|  18 | Chahal  | Gujarat     |  2000 |   8000 |
+|  20 | Pujara  | Gujarat     | 16000 |  42000 |
++-----+---------+-------------+-------+--------+
+11 rows in set (0.01 sec)
+
+Q. WASQL Query show the player record whose run record and salary is greater arranges
+ player record in descending order.
+ 
 
 
