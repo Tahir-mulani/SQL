@@ -1,0 +1,35 @@
+
+DDL (Data Defination Language)
+
+1.CREATE - it is used for create table ,create database , create procedure etc.
+
+example:
+mysql> create database topic;
+Query OK, 1 row affected (0.02 sec)
+
+How to create table using a create command 
+
+Syntax: 
+	create table tablename(colname datatype(size),colname datatype(size).... Col datatype(size));
+
+example:
+mysql> create table employee(id int,name varchar(50),department varchar(200),salary int);
+Query OK, 0 rows affected (0.21 sec)
+
+2.DESC - this command is used for describe the table structure like as column name in table, column data type , column size etc 
+
+Syntax:  DESC tablename;
+
+example:
+
+mysql> DESC employee;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| id         | int          | YES  |     | NULL    |       |
+| name       | varchar(50)  | YES  |     | NULL    |       |
+| department | varchar(200) | YES  |     | NULL    |       |
+| salary     | int          | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
