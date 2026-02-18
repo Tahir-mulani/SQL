@@ -407,6 +407,38 @@ mysql> SELECT*FROM player WHERE state NOT IN('Maharastra','Punjab','Delhi');
 
 Q. WASQL Query show the player record whose run record and salary is greater arranges
  player record in descending order.
+
+mysql> SELECT * FROM player WHERE  runs >  5000 AND salary > 20000 ORDER BY runs DESC;
++-----+----------+-------------+-------+--------+
+| pid | pname    | state       | runs  | salary |
++-----+----------+-------------+-------+--------+
+|   2 | Virat    | Delhi       | 22000 |  60000 |
+|   1 | Rohit    | Maharashtra | 18000 |  50000 |
+|  20 | Pujara   | Gujarat     | 16000 |  42000 |
+|   3 | Hardik   | Gujarat     | 15000 |  45000 |
+|   6 | KL Rahul | Punjab      | 14000 |  35000 |
+|  11 | Gill     | Punjab      | 13000 |  38000 |
+|   4 | Shubham  | Punjab      | 12000 |  30000 |
+|   7 | Jadeja   | Gujarat     | 11000 |  40000 |
+|  12 | Pant     | Delhi       | 10000 |  32000 |
+|   5 | Surya    | Maharashtra |  9000 |  25000 |
+|  13 | Bumrah   | Gujarat     |  9000 |  27000 |
+|  10 | Ruturaj  | Maharashtra |  7000 |  22000 |
++-----+----------+-------------+-------+--------+
+12 rows in set (0.00 sec)
+
+ 
+ 
+ ---- Question on Aggregate Functions ----
+Q. WASQL Query to count the number of employee from table.
+Q. WASQL Query to count the employee whose salary between 3000 to 20000
+Q. WASQL Query to count the employee whose salary greater than 3000 and less than 20000 and whose name is not a ram and rupali.
+Q. WASQL Query to calculate the sum of all employee salary from employee table.
+Q. WASQL Query to calculate the sum of employee except the dinesh and rajesh
+Q. WASQL Query to find the minimum salary of employee
+Q. WASQL Query to find the maximum salary of employee from employee table.
+Q. WASQL Query to find the average salary of employee from employee table.
+
  
 
 

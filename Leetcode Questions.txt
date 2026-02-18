@@ -57,3 +57,14 @@ JOIN Person p2
 ON p.Email = p2.Email AND p.Id > p2.Id;
 
 ====================================================================
+
+Q.183
+(Customers Who Never Order)
+SELECT c.name AS Customers FROM Customers c LEFT JOIN Orders o ON c.id = o.customerId WHERE o.id IS NULL;
+
+    OR
+	
+Select a.name as Customers from Customers as a LEFT OUTER JOIN Orders as b On a.id=b.customerId
+where customerId is null;
+
+===================================================================

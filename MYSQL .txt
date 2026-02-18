@@ -33,3 +33,64 @@ mysql> DESC employee;
 +------------+--------------+------+-----+---------+-------+
 4 rows in set (0.04 sec)
 
+3.ALTER COMMAND :alter command is used for modify the column name, add new column,
+ remove column from table , change column type or size etc
+
+Alter command provide following options 
+I.ADD :this option helps us to add a new column in the database table after table creation  
+Syntax: alter table tablename  add columnname datatype(size);
+	 Or 
+We can add more than one column at time using alter statement 
+ Syntax: alter table tablename  add (columnname datatype(size),columnname datatype(size));
+ 
+example: Example: we have employee table with field eid,name,email,salary and
+ we want to add two more column in employee table address, contact 
+ 
+
+
+II.MODIFY
+III.DROP:drop  is used for remove the column from database table 
+Example: if we think about the above table we have an address column and
+we want to remove it from the employee table.
+
+Syntax: alter table tablename drop columnname;
+
+
+IV.RENAME : rename option is used for change the name  of column 
+Syntax: alter table tablename  rename  oldcolname to newcolname
+
+Example: if we think about table we have student table with S_id
+column so we want to modify S_id name to studId
+
+mysql> ALTER TABLE student RENAME COLUMN S_id TO studId;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC student;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| studId    | int          | YES  |     | NULL    |       |
+| FirstName | varchar(20)  | YES  |     | NULL    |       |
+| LastName  | varchar(20)  | YES  |     | NULL    |       |
+| Class     | varchar(10)  | YES  |     | NULL    |       |
+| Grade     | varchar(20)  | YES  |     | NULL    |       |
+| Address   | varchar(200) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+V.DROP STATEMENT: 
+Drop statement is used for drop the table , drop or delete the database , procedure,trigger,function ,index etc 
+Syntax: drop table tablename;
+
+
+example:
+mysql> DROP DATABASE topic;
+Query OK, 0 rows affected (0.08 sec)
+
+
+
+ 
+
+
+
