@@ -439,6 +439,367 @@ Q. WASQL Query to find the minimum salary of employee
 Q. WASQL Query to find the maximum salary of employee from employee table.
 Q. WASQL Query to find the average salary of employee from employee table.
 
- 
+
+===============================================================================================
+19-02-2026 PRACTICE QUESTION
+
+ mysql> select * from employee;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 30000.00 | 2020-05-10 |
+|      3 | Rohan    | HR         | 24200.00 | 2021-07-21 |
+|      4 | Sita     | HR         | 44000.00 | 2019-11-01 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|     10 | Tina     | Finance    | 27000.00 | 2020-04-17 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     12 | Meena    | IT         |  4000.00 | 2022-10-14 |
+|     14 | Arun     | Finance    | 55000.00 | 2017-01-25 |
+|     15 | Nikhil   | HR         | 23100.00 | 2024-05-05 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     18 | Kunal    | Finance    | 26000.00 | 2022-11-22 |
+|     19 | Om       | HR         | 27500.00 | 2021-04-01 |
+|     20 | Asha     | IT         | 54000.00 | 2019-06-16 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|     24 | Aarti    | HR         | 50600.00 | 2020-08-08 |
++--------+----------+------------+----------+------------+
+19 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE SALARY < 25000;
+Query OK, 3 rows affected (0.03 sec)
+
+mysql> SELECT SUM(SALARY) FROM EMPLOYEE;
++-------------+
+| SUM(SALARY) |
++-------------+
+|   608300.00 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT AVG(SALARY) FROM EMPLOYEE WHERE DEPARTMENT = 'IT';
++--------------+
+| AVG(SALARY)  |
++--------------+
+| 37666.666667 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(SALARY),MIN(SALARY) FROM EMPLOYEE;
++-------------+-------------+
+| MAX(SALARY) | MIN(SALARY) |
++-------------+-------------+
+|    55000.00 |    26000.00 |
++-------------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE ORDER  BY SALARY DESC;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|     14 | Arun     | Finance    | 55000.00 | 2017-01-25 |
+|     20 | Asha     | IT         | 54000.00 | 2019-06-16 |
+|     24 | Aarti    | HR         | 50600.00 | 2020-08-08 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|      4 | Sita     | HR         | 44000.00 | 2019-11-01 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|      1 | Amit     | IT         | 30000.00 | 2020-05-10 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|     19 | Om       | HR         | 27500.00 | 2021-04-01 |
+|     10 | Tina     | Finance    | 27000.00 | 2020-04-17 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|     18 | Kunal    | Finance    | 26000.00 | 2022-11-22 |
++--------+----------+------------+----------+------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE SALARY >= 30000 AND SALARY <= 50000 ORDER BY SALARY ASC;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 30000.00 | 2020-05-10 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|      4 | Sita     | HR         | 44000.00 | 2019-11-01 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
++--------+----------+------------+----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE DEPARTMENT != 'HR' AND SALARY > 25000;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 30000.00 | 2020-05-10 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|     10 | Tina     | Finance    | 27000.00 | 2020-04-17 |
+|     14 | Arun     | Finance    | 55000.00 | 2017-01-25 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     18 | Kunal    | Finance    | 26000.00 | 2022-11-22 |
+|     20 | Asha     | IT         | 54000.00 | 2019-06-16 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
++--------+----------+------------+----------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE SALARY > 30000 AND  NOT EMP_NAME LIKE 'A%';
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      4 | Sita     | HR         | 44000.00 | 2019-11-01 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
++--------+----------+------------+----------+------------+
+7 rows in set (0.00 sec)
+mysql> SELECT*FROM EMPLOYEE WHERE JOIN_DATE BETWEEN '2021-01-01' AND '2023-12-31' ORDER BY JOIN_DATE DESC;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|     18 | Kunal    | Finance    | 26000.00 | 2022-11-22 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|     19 | Om       | HR         | 27500.00 | 2021-04-01 |
++--------+----------+------------+----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE SALARY%5000;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      4 | Sita     | HR         | 44000.00 | 2019-11-01 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|      9 | Ravi     | IT         | 47000.00 | 2021-12-05 |
+|     10 | Tina     | Finance    | 27000.00 | 2020-04-17 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     18 | Kunal    | Finance    | 26000.00 | 2022-11-22 |
+|     19 | Om       | HR         | 27500.00 | 2021-04-01 |
+|     20 | Asha     | IT         | 54000.00 | 2019-06-16 |
+|     22 | Diya     | Finance    | 34000.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|     24 | Aarti    | HR         | 50600.00 | 2020-08-08 |
++--------+----------+------------+----------+------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMPLOYEE WHERE MOD(SALARY,5000)=0;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 30000.00 | 2020-05-10 |
+|      6 | Raj      | Finance    | 50000.00 | 2018-09-18 |
+|     14 | Arun     | Finance    | 55000.00 | 2017-01-25 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
++--------+----------+------------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET SALARY = SALARY*1.15 WHERE JOIN_DATE < '2022-01-01';
+Query OK, 9 rows affected (0.07 sec)
+Rows matched: 9  Changed: 9  Warnings: 0
+
+
+mysql> UPDATE EMPLOYEE SET SALARY = SALARY*0.95 WHERE DEPARTMENT ='Finance';
+Query OK, 5 rows affected (0.01 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET DEPARTMENT = 'Senior IT' WHERE SALARY >= 45000;
+Query OK, 6 rows affected (0.01 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 34500.00 | 2020-05-10 |
+|      4 | Sita     | Senior IT  | 50600.00 | 2019-11-01 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      6 | Raj      | Senior IT  | 54625.00 | 2018-09-18 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     10 | Tina     | Finance    | 29497.50 | 2020-04-17 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     14 | Arun     | Senior IT  | 60087.50 | 2017-01-25 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     18 | Kunal    | Finance    | 24700.00 | 2022-11-22 |
+|     19 | Om       | HR         | 31625.00 | 2021-04-01 |
+|     20 | Asha     | Senior IT  | 62100.00 | 2019-06-16 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|     24 | Aarti    | Senior IT  | 58190.00 | 2020-08-08 |
++--------+----------+------------+----------+------------+
+16 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET SALARY = 30000 WHERE SALARY < 25000;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      1 | Amit     | IT         | 34500.00 | 2020-05-10 |
+|      4 | Sita     | Senior IT  | 50600.00 | 2019-11-01 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      6 | Raj      | Senior IT  | 54625.00 | 2018-09-18 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     10 | Tina     | Finance    | 29497.50 | 2020-04-17 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     14 | Arun     | Senior IT  | 60087.50 | 2017-01-25 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     18 | Kunal    | Finance    | 30000.00 | 2022-11-22 |
+|     19 | Om       | HR         | 31625.00 | 2021-04-01 |
+|     20 | Asha     | Senior IT  | 62100.00 | 2019-06-16 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|     24 | Aarti    | Senior IT  | 58190.00 | 2020-08-08 |
++--------+----------+------------+----------+------------+
+16 rows in set (0.00 sec)
+
+mysql> DELETE FROM  EMPLOYEE WHERE JOIN_DATE < '2021-01-01';
+Query OK, 7 rows affected (0.08 sec)
+
+mysql> SELECT*FROM EMPLOYEE;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      7 | Anil     | HR         | 26400.00 | 2024-02-20 |
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     18 | Kunal    | Finance    | 30000.00 | 2022-11-22 |
+|     19 | Om       | HR         | 31625.00 | 2021-04-01 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
++--------+----------+------------+----------+------------+
+9 rows in set (0.02 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE DEPARTMENT != 'IT' AND SALARY < 28000;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT DEPARTMENT,SUM(SALARY) AS TOTAL_SALARY FROM EMPLOYEE GROUP BY DEPARTMENT;
++------------+--------------+
+| DEPARTMENT | TOTAL_SALARY |
++------------+--------------+
+| IT         |     95000.00 |
+| Senior IT  |     54050.00 |
+| HR         |     73425.00 |
+| Finance    |     62300.00 |
++------------+--------------+
+4 rows in set (0.01 sec)
+mysql> SELECT DEPARTMENT,AVG(SALARY) FROM EMPLOYEE GROUP BY DEPARTMENT;
++------------+--------------+
+| DEPARTMENT | AVG(SALARY)  |
++------------+--------------+
+| IT         | 31666.666667 |
+| Senior IT  | 54050.000000 |
+| HR         | 36712.500000 |
+| Finance    | 31150.000000 |
++------------+--------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT DEPARTMENT FROM EMPLOYEE GROUP BY DEPARTMENT HAVING COUNT(EMP_ID) > 2;
++------------+
+| DEPARTMENT |
++------------+
+| IT         |
++------------+
+1 row in set (0.01 sec)
+
+mysql> SELECT DEPARTMENT,MAX(SALARY) AS MAXIMUM_SALARY FROM EMPLOYEE GROUP BY DEPARTMENT;
++------------+----------------+
+| DEPARTMENT | MAXIMUM_SALARY |
++------------+----------------+
+| IT         |       35000.00 |
+| Senior IT  |       54050.00 |
+| HR         |       41800.00 |
+| Finance    |       32300.00 |
++------------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT DEPARTMENT FROM EMPLOYEE GROUP BY DEPARTMENT HAVING MIN(SALARY) > 30000;
++------------+
+| DEPARTMENT |
++------------+
+| Senior IT  |
+| HR         |
++------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT *FROM EMPLOYEE WHERE EMP_NAME LIKE '____';
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
++--------+----------+------------+----------+------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT *FROM EMPLOYEE WHERE LENGTH(EMP_NAME) = 4;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
++--------+----------+------------+----------+------------+
+4 rows in set (0.01 sec)
+mysql> SELECT *FROM EMPLOYEE WHERE EMP_NAME LIKE '%A' OR EMP_NAME LIKE '%E' OR EMP_NAME LIKE'%I' OR EMP_NAME LIKE '%O' OR EMP_NAME LIKE '%U';
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
++--------+----------+------------+----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE LOWER(RIGHT(EMP_NAME, 1)) IN ('a','e','i','o','u');
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
++--------+----------+------------+----------+------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM EMPLOYEE ORDER BY DEPARTMENT ASC,SALARY DESC;
++--------+----------+------------+----------+------------+
+| EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
++--------+----------+------------+----------+------------+
+|     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
+|     18 | Kunal    | Finance    | 30000.00 | 2022-11-22 |
+|     11 | John     | HR         | 41800.00 | 2023-08-09 |
+|     19 | Om       | HR         | 31625.00 | 2021-04-01 |
+|     16 | Sara     | IT         | 35000.00 | 2023-09-19 |
+|     23 | Sohan    | IT         | 32000.00 | 2022-07-27 |
+|      5 | Kiran    | IT         | 28000.00 | 2023-01-12 |
+|      9 | Ravi     | Senior IT  | 54050.00 | 2021-12-05 |
++--------+----------+------------+----------+------------+
+8 rows in set (0.00 sec)
+
+
 
 

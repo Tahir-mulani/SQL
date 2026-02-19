@@ -68,3 +68,18 @@ Select a.name as Customers from Customers as a LEFT OUTER JOIN Orders as b On a.
 where customerId is null;
 
 ===================================================================
+
+Q.1757
+(Recyclable and Low Fat Products)
+SELECT product_id FROM products
+WHERE low_fats='Y'AND recyclable='Y';
+
+====================================================================
+
+Q.1148
+(Article Views I)
+SELECT  DISTINCT author_id AS id FROM Views
+WHERE author_id = viewer_id ORDER BY id;
+
+==========================================================================
+  
