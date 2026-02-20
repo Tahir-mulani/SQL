@@ -57,3 +57,37 @@ JOIN Person p2
 ON p.Email = p2.Email AND p.Id > p2.Id;
 
 ====================================================================
+
+Q.1683
+(Invalid Tweets)
+SELECT tweet_id FROM Tweets WHERE LENGTH(content)>15;
+
+====================================================================
+
+Q.511
+(Game Play Analysis I)
+SELECT player_id, MIN(event_date) AS first_login
+FROM Activity
+GROUP BY player_id;
+
+====================================================================
+
+Q.620
+(Not Boring Movies)
+SELECT * FROM Cinema
+WHERE MOD(id,2) != 0
+AND description != 'boring'
+ORDER BY rating DESC;
+   OR
+SELECT * FROM Cinema WHERE id%2 != 0 AND  description != 'boring' 
+ORDER BY rating DESC;
+
+=====================================================================
+
+Q.627
+(Swap Sex of Employees)
+UPDATE Salary SET sex = CASE
+WHEN sex = 'm' THEN 'f'
+WHEN sex = 'f' THEN 'm'
+END;
+======================================================================
