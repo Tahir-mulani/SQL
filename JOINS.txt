@@ -1,0 +1,215 @@
+Practice Question on Join 
+___________________________________________________________
+Tables
+______________________________________________________________
+Consider following tables 
+-- Parent Table
+CREATE TABLE project (
+    project_id INT PRIMARY KEY,
+    project_name VARCHAR(100),
+    location VARCHAR(100),
+    budget DECIMAL(12,2)
+);
+ 
+-- Child Table
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    designation VARCHAR(100),
+    salary DECIMAL(10,2),
+    manager_id INT,
+    project_id INT,
+    FOREIGN KEY (project_id) REFERENCES project(project_id));
+
+
+mysql> select*from employee;
++--------+----------+-------------+----------+------------+------------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id |
++--------+----------+-------------+----------+------------+------------+
+|      1 | Amit     | Developer   | 40000.00 |       NULL |        101 |
+|      2 | Neha     | Tester      | 35000.00 |          1 |        101 |
+|      3 | Ravi     | Developer   | 45000.00 |          1 |        102 |
+|      4 | Kiran    | HR          | 30000.00 |       NULL |       NULL |
+|      5 | Meena    | Developer   | 38000.00 |          3 |        103 |
+|      6 | Arjun    | Manager     | 60000.00 |       NULL |        102 |
+|      7 | Priya    | Analyst     | 42000.00 |          6 |       NULL |
+|      8 | Sohan    | Developer   | 37000.00 |          6 |        104 |
++--------+----------+-------------+----------+------------+------------+
+
+
+mysql> select*from project;
++------------+-----------------+---------------+-----------+
+| project_id | project_name    | location      | budget    |
++------------+-----------------+---------------+-----------+
+|        101 | Banking App     | New York      | 500000.00 |
+|        102 | E-Commerce      | Chicago       | 750000.00 |
+|        103 | AI System       | San Francisco | 900000.00 |
+|        104 | Cloud Migration | Dallas        | 600000.00 |
++------------+-----------------+---------------+-----------+
+ 
+
+
+
+
+ Solve following queries using above tables 
+___________________________________________________________________________________________________________________________
+ 1. All employees with project details (even if not assigned)
+mysql> select e.*,p.project_name from employee e LEFT JOIN project p ON e.project_id = p.project_id;
++--------+----------+-------------+----------+------------+------------+-----------------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id | project_name    |
++--------+----------+-------------+----------+------------+------------+-----------------+
+|      1 | Amit     | Developer   | 40000.00 |       NULL |        101 | Banking App     |
+|      2 | Neha     | Tester      | 35000.00 |          1 |        101 | Banking App     |
+|      3 | Ravi     | Developer   | 45000.00 |          1 |        102 | E-Commerce      |
+|      4 | Kiran    | HR          | 30000.00 |       NULL |       NULL | NULL            |
+|      5 | Meena    | Developer   | 38000.00 |          3 |        103 | AI System       |
+|      6 | Arjun    | Manager     | 60000.00 |       NULL |        102 | E-Commerce      |
+|      7 | Priya    | Analyst     | 42000.00 |          6 |       NULL | NULL            |
+|      8 | Sohan    | Developer   | 37000.00 |          6 |        104 | Cloud Migration |
++--------+----------+-------------+----------+------------+------------+-----------------+
+
+
+ 2. Employees not assigned to any project
+
+mysql> select e.*,p.project_name from employee e LEFT JOIN project p ON e.project_id = p.project_id WHERE e.project_id IS NULL;
++--------+----------+-------------+----------+------------+------------+--------------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id | project_name |
++--------+----------+-------------+----------+------------+------------+--------------+
+|      4 | Kiran    | HR          | 30000.00 |       NULL |       NULL | NULL         |
+|      7 | Priya    | Analyst     | 42000.00 |          6 |       NULL | NULL         |
++--------+----------+-------------+----------+------------+------------+--------------+
+
+ 3. All employees with project info
+mysql> select e.*,p.* from employee e INNER JOIN project p ON e.project_id = p.project_id;
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id | project_id | project_name    | location      | budget    |
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+|      1 | Amit     | Developer   | 40000.00 |       NULL |        101 |        101 | Banking App     | New York      | 500000.00 |
+|      2 | Neha     | Tester      | 35000.00 |          1 |        101 |        101 | Banking App     | New York      | 500000.00 |
+|      3 | Ravi     | Developer   | 45000.00 |          1 |        102 |        102 | E-Commerce      | Chicago       | 750000.00 |
+|      6 | Arjun    | Manager     | 60000.00 |       NULL |        102 |        102 | E-Commerce      | Chicago       | 750000.00 |
+|      5 | Meena    | Developer   | 38000.00 |          3 |        103 |        103 | AI System       | San Francisco | 900000.00 |
+|      8 | Sohan    | Developer   | 37000.00 |          6 |        104 |        104 | Cloud Migration | Dallas        | 600000.00 |
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+  
+ 4. Employees without projects
+mysql> select e.*,p.project_name from employee e LEFT JOIN project p ON e.project_id = p.project_id WHERE e.project_id IS NULL;
++--------+----------+-------------+----------+------------+------------+--------------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id | project_name |
++--------+----------+-------------+----------+------------+------------+--------------+
+|      4 | Kiran    | HR          | 30000.00 |       NULL |       NULL | NULL         |
+|      7 | Priya    | Analyst     | 42000.00 |          6 |       NULL | NULL         |
++--------+----------+-------------+----------+------------+------------+--------------+
+ 
+
+ 5. Employee count including unassigned
+mysql> select COUNT(e.emp_id) AS Total_Employees from employee e;
++-----------------+
+| Total_Employees |
++-----------------+
+|               8 |
++-----------------+ 
+
+ 6. All projects and employees
+mysql> select e.*,p.* from employee e LEFT JOIN project p ON e.project_id = p.project_id UNION select e.*,p.* from project p RIGHT JOIN employee e ON p.project_id = e.project_id ;
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+| emp_id | emp_name | designation | salary   | manager_id | project_id | project_id | project_name    | location      | budget    |
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+|      1 | Amit     | Developer   | 40000.00 |       NULL |        101 |        101 | Banking App     | New York      | 500000.00 |
+|      2 | Neha     | Tester      | 35000.00 |          1 |        101 |        101 | Banking App     | New York      | 500000.00 |
+|      3 | Ravi     | Developer   | 45000.00 |          1 |        102 |        102 | E-Commerce      | Chicago       | 750000.00 |
+|      4 | Kiran    | HR          | 30000.00 |       NULL |       NULL |       NULL | NULL            | NULL          |      NULL |
+|      5 | Meena    | Developer   | 38000.00 |          3 |        103 |        103 | AI System       | San Francisco | 900000.00 |
+|      6 | Arjun    | Manager     | 60000.00 |       NULL |        102 |        102 | E-Commerce      | Chicago       | 750000.00 |
+|      7 | Priya    | Analyst     | 42000.00 |          6 |       NULL |       NULL | NULL            | NULL          |      NULL |
+|      8 | Sohan    | Developer   | 37000.00 |          6 |        104 |        104 | Cloud Migration | Dallas        | 600000.00 |
++--------+----------+-------------+----------+------------+------------+------------+-----------------+---------------+-----------+
+
+ 7. Combined data with salary
+mysql> select e.emp_name,e.salary,p.project_name from employee e INNER JOIN project p ON e.project_id = p.project_id;
++----------+----------+-----------------+
+| emp_name | salary   | project_name    |
++----------+----------+-----------------+
+| Amit     | 40000.00 | Banking App     |
+| Neha     | 35000.00 | Banking App     |
+| Ravi     | 45000.00 | E-Commerce      |
+| Arjun    | 60000.00 | E-Commerce      |
+| Meena    | 38000.00 | AI System       |
+| Sohan    | 37000.00 | Cloud Migration |
++----------+----------+-----------------+
+ 8. Employee with their Manager
+mysql> select e.emp_name AS Employee,m.emp_name AS Manager from employee e INNER JOIN employee m On e.manager_id = m.emp_id;
++----------+---------+
+| Employee | Manager |
++----------+---------+
+| Neha     | Amit    |
+| Ravi     | Amit    |
+| Meena    | Ravi    |
+| Priya    | Arjun   |
+| Sohan    | Arjun   |
++----------+---------+
+
+ 9. Employees working under same manager
+mysql> select e1.emp_name AS Employee1,e2.emp_name AS Employee2,m.emp_name from employee e1
+	   JOIN employee e2 ON e1.manager_id = e2.manager_id
+ 	   AND e1.emp_id < e2.emp_id
+	   JOIN employee m ON e1.manager_id = m.emp_id;
++-----------+-----------+----------+
+| Employee1 | Employee2 | emp_name |
++-----------+-----------+----------+
+| Neha      | Ravi      | Amit     |
+| Priya     | Sohan     | Arjun    |
++-----------+-----------+----------+
+
+10. Manager and total team salary
+mysql> select m.emp_name AS Manager, SUM(e.salary) AS Total_Team_Salary
+    -> From employee e JOIN employee m On e.manager_id = m.emp_id GROUP BY m.emp_name;
++---------+-------------------+
+| Manager | Total_Team_Salary |
++---------+-------------------+
+| Amit    |          80000.00 |
+| Ravi    |          38000.00 |
+| Arjun   |          79000.00 |
++---------+-------------------+
+
+11. All possible combinations
+mysql> select e.emp_name, p.project_name from employee e CROSS JOIN project p;
++----------+-----------------+
+| emp_name | project_name    |
++----------+-----------------+
+| Amit     | Cloud Migration |
+| Amit     | AI System       |
+| Amit     | E-Commerce      |
+| Amit     | Banking App     |
+| Neha     | Cloud Migration |
+| Neha     | AI System       |
+| Neha     | E-Commerce      |
+| Neha     | Banking App     |
+| Ravi     | Cloud Migration |
+| Ravi     | AI System       |
+| Ravi     | E-Commerce      |
+| Ravi     | Banking App     |
+| Kiran    | Cloud Migration |
+| Kiran    | AI System       |
+| Kiran    | E-Commerce      |
+| Kiran    | Banking App     |
+| Meena    | Cloud Migration |
+| Meena    | AI System       |
+| Meena    | E-Commerce      |
+| Meena    | Banking App     |
+| Arjun    | Cloud Migration |
+| Arjun    | AI System       |
+| Arjun    | E-Commerce      |
+| Arjun    | Banking App     |
+| Priya    | Cloud Migration |
+| Priya    | AI System       |
+| Priya    | E-Commerce      |
+| Priya    | Banking App     |
+| Sohan    | Cloud Migration |
+| Sohan    | AI System       |
+| Sohan    | E-Commerce      |
+| Sohan    | Banking App     |
++----------+-----------------+
+
+12. Count total combinations
+13. Cartesian join with condition (filter after join)
