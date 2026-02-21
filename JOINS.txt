@@ -212,4 +212,37 @@ mysql> select e.emp_name, p.project_name from employee e CROSS JOIN project p;
 +----------+-----------------+
 
 12. Count total combinations
+mysql> select COUNT(*) AS Total_Combination from employee e CROSS JOIN project p;
++-------------------+
+| Total_Combination |
++-------------------+
+|                32 |
++-------------------+
+    OR
+mysql> select (select Count(*) from employee)*(select Count(*) from project) AS Total_Combination;
++-------------------+
+| Total_Combination |
++-------------------+
+|                32 |
++-------------------+
+
 13. Cartesian join with condition (filter after join)
+mysql> select e.emp_name,p.project_name,e.salary from employee e CROSS JOIN project p WHERE e.salary > 40000;
++----------+-----------------+----------+
+| emp_name | project_name    | salary   |
++----------+-----------------+----------+
+| Priya    | Banking App     | 42000.00 |
+| Arjun    | Banking App     | 60000.00 |
+| Ravi     | Banking App     | 45000.00 |
+| Priya    | E-Commerce      | 42000.00 |
+| Arjun    | E-Commerce      | 60000.00 |
+| Ravi     | E-Commerce      | 45000.00 |
+| Priya    | AI System       | 42000.00 |
+| Arjun    | AI System       | 60000.00 |
+| Ravi     | AI System       | 45000.00 |
+| Priya    | Cloud Migration | 42000.00 |
+| Arjun    | Cloud Migration | 60000.00 |
+| Ravi     | Cloud Migration | 45000.00 |
++----------+-----------------+----------+
+
+===============================================================================================================================================================================================
