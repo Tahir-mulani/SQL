@@ -1111,8 +1111,11 @@ mysql> select sub.subject_name,COUNT(sq.subject_id)  AS Question_Count from subj
 +------------------+----------------+
 
 61.Students Appeared in More Than 2 Exams
+mysql> select s.student_id,s.student_name,count(r.exam_id) AS Exam_Count from student s INNER JOIN result r ON r.student_id = s.student_id GROUP BY s.student_id,s.student_name HAVING COUNT(r.exam_id)>2;
+Empty set (0.02 sec)
 
 62. Average Marks Greater Than 60
+
 63. Easy Questions With Subject
 64. Students and Total Exams Per Subject
 65. Highest Marks Per Exam

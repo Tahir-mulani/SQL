@@ -90,4 +90,13 @@ UPDATE Salary SET sex = CASE
 WHEN sex = 'm' THEN 'f'
 WHEN sex = 'f' THEN 'm'
 END;
+
+======================================================================
+
+Q.577
+(Employee Bonus)
+select e.name AS name,b.bonus AS bonus from Employee e
+LEFT JOIN Bonus b ON e.empId = b.empId 
+WHERE b.bonus < 1000 OR b.bonus IS NULL;
+
 ======================================================================
