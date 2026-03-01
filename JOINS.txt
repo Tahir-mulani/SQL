@@ -1,3 +1,148 @@
+Joins in SQL
+Q. What is joins & Why use it?
+_________________________________________________________________________
+Joins is a part of select query normally which is used for fetch data from two or more than two  table those are interconnected with each other called as joins
+Normally joins fetch data from different tables from database and show as single table output to end user 
+
+Types of joins 
+Inner join  
+Left join 
+Right join 
+Outer join 
+Self join 
+Cartesian project join 
+Etc 
+
+Inner join: inner join is used for fetch common data between tables those are interconnected with each other means
+inner join fetch common data from left hand side table as well as right hand side table but fetch common data means
+fetch data from child table and map with parent if parent record or primary key column present in child table 
+Otherwise not 
+
+Left join: Left join means fetch all records from left hand side table but common records from right hand side table.
+
+Right join: right join table means fetch all records from right hand side and common record from left hand side table 
+
+Outer join: Outer join is a combination of left and right join means fetch all records from left hand side tables and
+right hand side tables 
+
+How to write join practically using MYSQL
+
+*Syntax:*
+	SELECT RightTableReference.columnname,LeftTableReference.columnname 
+	FROM LeftTable LeftReference TYPE JOIN RightTable RightReference
+	ON 
+	LeftTableReference.column = RightTableReference.column;     <---- This column must be common in both tables
+	                         
+Examples of JOINS
+							 
+mysql> desc course;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cid   | int         | NO   | PRI | NULL    |       |
+| name  | varchar(50) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sid     | int         | NO   | PRI | NULL    |       |
+| name    | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(50) | YES  |     | NULL    |       |
+| contact | int         | YES  |     | NULL    |       |
+| cid     | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select*from course;
++-----+--------+
+| cid | name   |
++-----+--------+
+|   1 | java   |
+|   2 | .NET   |
+|   3 | Python |
++-----+--------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student;
++-----+----------+----------------+-----------+------+
+| sid | name     | email          | contact   | cid  |
++-----+----------+----------------+-----------+------+
+|   1 | vahid    | v@gmail.com    |  12345689 |    1 |
+|   2 | Salasn   | s@gmail.com    | 565323689 |    1 |
+|   3 | Arbaatin | Arb@gmail.com  |  42835689 |    2 |
+|   4 | sittatin | sitt@gmail.com |   7231689 | NULL |
++-----+----------+----------------+-----------+------+
+
+mysql> select*from course;
++-----+--------+
+| cid | name   |
++-----+--------+
+|   1 | java   |
+|   2 | .NET   |
+|   3 | Python |
++-----+--------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student;
++-----+----------+----------------+-----------+------+
+| sid | name     | email          | contact   | cid  |
++-----+----------+----------------+-----------+------+
+|   1 | vahid    | v@gmail.com    |  12345689 |    1 |
+|   2 | Salasn   | s@gmail.com    | 565323689 |    1 |
+|   3 | Arbaatin | Arb@gmail.com  |  42835689 |    2 |
+|   4 | sittatin | sitt@gmail.com |   7231689 | NULL |
++-----+----------+----------------+-----------+------+
+
+mysql> select c.name,s.name,s.email,s.contact from course c INNER JOIN student s ON c.cid = s.cid;
++------+----------+---------------+-----------+
+| name | name     | email         | contact   |
++------+----------+---------------+-----------+
+| java | vahid    | v@gmail.com   |  12345689 |
+| java | Salasn   | s@gmail.com   | 565323689 |
+| .NET | Arbaatin | Arb@gmail.com |  42835689 |
++------+----------+---------------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select c.name,s.name,s.email,s.contact from course c LEFT JOIN student s ON c.cid = s.cid;
++--------+----------+---------------+-----------+
+| name   | name     | email         | contact   |
++--------+----------+---------------+-----------+
+| java   | vahid    | v@gmail.com   |  12345689 |
+| java   | Salasn   | s@gmail.com   | 565323689 |
+| .NET   | Arbaatin | Arb@gmail.com |  42835689 |
+| Python | NULL     | NULL          |      NULL |
++--------+----------+---------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select c.name,s.name,s.email,s.contact from course c RIGHT JOIN student s ON c.cid = s.cid;
++------+----------+----------------+-----------+
+| name | name     | email          | contact   |
++------+----------+----------------+-----------+
+| java | vahid    | v@gmail.com    |  12345689 |
+| java | Salasn   | s@gmail.com    | 565323689 |
+| .NET | Arbaatin | Arb@gmail.com  |  42835689 |
+| NULL | sittatin | sitt@gmail.com |   7231689 |
++------+----------+----------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select c.name,s.name,s.email,s.contact from course c LEFT JOIN student s ON c.cid = s.cid
+       UNION
+	   select c.name,s.name,s.email,s.contact from course c RIGHT JOIN student s ON c.cid = s.cid;
++--------+----------+----------------+-----------+
+| name   | name     | email          | contact   |
++--------+----------+----------------+-----------+
+| java   | vahid    | v@gmail.com    |  12345689 |
+| java   | Salasn   | s@gmail.com    | 565323689 |
+| .NET   | Arbaatin | Arb@gmail.com  |  42835689 |
+| Python | NULL     | NULL           |      NULL |
+| NULL   | sittatin | sitt@gmail.com |   7231689 |
++--------+----------+----------------+-----------+
+5 rows in set (0.01 sec
+
+===========================================================================================
 Practice Question on Join 
 ___________________________________________________________
 Tables
@@ -1115,20 +1260,181 @@ mysql> select s.student_id,s.student_name,count(r.exam_id) AS Exam_Count from st
 Empty set (0.02 sec)
 
 62. Average Marks Greater Than 60
+mysql> select s.student_id,s.student_name,AVG(r.marks_obtained) from student s INNER JOIN result r ON r.student_id = s.student_id GROUP BY s.student_id,s.student_name HAVING AVG(r.marks_obtained) > 60;
++------------+-----------------+-----------------------+
+| student_id | student_name    | AVG(r.marks_obtained) |
++------------+-----------------+-----------------------+
+|          1 | Alice Johnson   |               78.5000 |
+|          3 | Andrew Wilson   |               81.5000 |
+|          7 | Michael Johnson |               90.0000 |
++------------+-----------------+-----------------------+
 
 63. Easy Questions With Subject
+mysql> select s.subject_name,q.difficulty_level from subject s INNER JOIN subjectquestion sq ON s.subject_id = sq.subject_id INNER JOIN question q ON sq.question_id = q.question_id WHERE q.difficulty_level = 'Easy' GROUP BY sq.subject_id;
++------------------+------------------+
+| subject_name     | difficulty_level |
++------------------+------------------+
+| Mathematics      | Easy             |
+| Computer Science | Easy             |
+| English          | Easy             |
++------------------+------------------+
+
 64. Students and Total Exams Per Subject
+mysql> select sub.subject_name,COUNT(r.student_id) AS No_of_Students from subject sub INNER JOIN examschedule e ON e.subject_id = sub.subject_id INNER JOIN result r ON r.exam_id = e.exam_id GROUP BY sub.subject_name;
++------------------+----------------+
+| subject_name     | No_of_Students |
++------------------+----------------+
+| Mathematics      |              4 |
+| Science          |              3 |
+| English          |              2 |
+| Computer Science |              2 |
+| Physics          |              2 |
++------------------+----------------+
+
 65. Highest Marks Per Exam
+mysql> select exam_id,MAX(marks_obtained) as Highest_marks from result GROUP BY exam_id;
++---------+---------------+
+| exam_id | Highest_marks |
++---------+---------------+
+|     201 |            85 |
+|     202 |            75 |
+|     203 |            65 |
+|     204 |            72 |
+|     205 |            88 |
+|     206 |            90 |
++---------+---------------+
+
 66 Lowest Marks Per Subject
+mysql> select sub.subject_name,MIN(r.marks_obtained) as Lowest_Obtained_marks from subject sub INNER JOIN examschedule e ON e.subject_id = sub.subject_id INNER JOIN result r ON r.exam_id =e.exam_id GROUP BY sub.subject_name;
++------------------+-----------------------+
+| subject_name     | Lowest_Obtained_marks |
++------------------+-----------------------+
+| Mathematics      |                    35 |
+| Science          |                    20 |
+| English          |                    60 |
+| Computer Science |                    40 |
+| Physics          |                    30 |
++------------------+-----------------------+
+
 67 Students Appeared in Subjects Containing 'Math'
+mysql> select distinct s.student_name from student s INNER JOIN result r ON r.student_id = s.student_id INNER JOIN examschedule e ON e.exam_id = r.exam_id INNER JOIN subject sub ON sub.subject_id = e.subject_id WHERE sub.subject_name LIKE '%Math%';
++-----------------+
+| student_name    |
++-----------------+
+| Alice Johnson   |
+| Bob Smith       |
+| Sophia Anderson |
+| Michael Johnson |
++-----------------+
+
 68.Count Students By Gender In Exams
+mysql> select s.gender,COUNT(DISTINCT r.student_id) AS Total_students from student s INNER JOIN result r ON r.student_id = s.student_id GROUP BY s.gender;
++--------+----------------+
+| gender | Total_students |
++--------+----------------+
+| Female |              4 |
+| Male   |              4 |
++--------+----------------+
+
 69. Students Who Appeared in 2025 Exams
+mysql> select DISTINCT s.student_name from student s INNER JOIN result r ON r.student_id = s.student_id INNER JOIN examschedule e ON e.exam_id = r.exam_id WHERE YEAR(e.exam_date) = 2025;
++-----------------+
+| student_name    |
++-----------------+
+| Alice Johnson   |
+| Bob Smith       |
+| Sophia Anderson |
+| Andrew Wilson   |
+| Olivia Wilson   |
+| James Brown     |
+| Emma Watson     |
++-----------------+
+
 70. Total Marks Per Subject
+mysql> select sub.subject_name,SUM(r.marks_obtained) AS Total_marks from subject sub INNER JOIN examschedule e ON e.subject_id = sub.subject_id INNER JOIN result r ON r.exam_id = e.exam_id GROUP BY sub.subject_name;
++------------------+-------------+
+| subject_name     | Total_marks |
++------------------+-------------+
+| Mathematics      |         255 |
+| Science          |         150 |
+| English          |         125 |
+| Computer Science |         112 |
+| Physics          |         118 |
++------------------+-------------+
+
 71. Students Who Passed More Than 1 Exam
+mysql> select s.student_name,COUNT(r.exam_id) AS Pass_count from student s INNER JOIN result r ON r.student_id = s.student_id WHERE r.result_status = 'Pass' GROUP BY s.student_name;
++-----------------+------------+
+| student_name    | Pass_count |
++-----------------+------------+
+| Alice Johnson   |          2 |
+| Andrew Wilson   |          2 |
+| Sophia Anderson |          2 |
+| James Brown     |          1 |
+| Michael Johnson |          1 |
+| Olivia Wilson   |          1 |
+| Bob Smith       |          1 |
++-----------------+------------+
+
 72. Students Ordered By Total Marks Desc
+
 73.Subjects With Exam Duration > 90
+mysql> select distinct sub.subject_name from subject sub INNER JOIN examschedule e ON e.subject_id = sub.subject_id WHERE e.duration_minutes > 90;
++------------------+
+| subject_name     |
++------------------+
+| Mathematics      |
+| Computer Science |
+| Physics          |
++------------------+
+
 74. Students From Chicago Who Passed
+mysql> select s.student_name,r.result_status from student s INNER JOIN result r ON s.student_id = r.student_id WHERE s.city = 'Chicago' AND r.result_status = 'Pass';
++---------------+---------------+
+| student_name  | result_status |
++---------------+---------------+
+| Bob Smith     | Pass          |
+| James Brown   | Pass          |
+| Olivia Wilson | Pass          |
++---------------+---------------+
+
 75 Total Questions By Difficult
+mysql> select COUNT(question_text) AS Total_difficult_Question from question where difficulty_level = 'Hard';
++--------------------------+
+| Total_difficult_Question |
++--------------------------+
+|                        3 |
++--------------------------+
+
 76 Students With Marks Between 50 and 80
+mysql> select s.student_id,s.student_name,r.marks_obtained from student s INNER JOIN result r ON s.student_id = r.student_id WHERE r.marks_obtained BETWEEN 50 and 80;
++------------+-----------------+----------------+
+| student_id | student_name    | marks_obtained |
++------------+-----------------+----------------+
+|          3 | Andrew Wilson   |             75 |
+|          4 | Sophia Anderson |             65 |
+|          8 | Olivia Wilson   |             55 |
+|          1 | Alice Johnson   |             72 |
+|          2 | Bob Smith       |             60 |
++------------+-----------------+----------------+
+
 78.Full Report (Student + Subject + Questions Count + Marks)
+mysql> select s.student_name,sub.subject_name,COUNT(DISTINCT sq.question_id) AS Total_questions ,SUM(r.marks_obtained) AS Total_marks from student s INNER JOIN result r ON s.student_id = r.student_id INNER JOIN examschedule e ON r.exam_id =e.exam_id INNER JOIN subject sub ON sub.subject_id = e.subject_id INNER JOIN subjectquestion sq ON sq.subject_id = sub.subject_id GROUP BY s.student_name,sub.subject_name;
++-----------------+------------------+-----------------+-------------+
+| student_name    | subject_name     | Total_questions | Total_marks |
++-----------------+------------------+-----------------+-------------+
+| Alice Johnson   | Computer Science |               2 |         144 |
+| Alice Johnson   | Mathematics      |               2 |         170 |
+| Andrew Wilson   | Physics          |               2 |         176 |
+| Andrew Wilson   | Science          |               2 |         150 |
+| Bob Smith       | English          |               1 |          60 |
+| Bob Smith       | Mathematics      |               2 |          70 |
+| Emma Watson     | Physics          |               2 |          60 |
+| James Brown     | Computer Science |               2 |          80 |
+| James Brown     | Science          |               2 |          40 |
+| Michael Johnson | Mathematics      |               2 |         180 |
+| Olivia Wilson   | Science          |               2 |         110 |
+| Sophia Anderson | English          |               1 |          65 |
+| Sophia Anderson | Mathematics      |               2 |          90 |
++-----------------+------------------+-----------------+-------------+
 

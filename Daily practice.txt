@@ -765,6 +765,7 @@ mysql> SELECT *FROM EMPLOYEE WHERE LENGTH(EMP_NAME) = 4;
 |     22 | Diya     | Finance    | 32300.00 | 2023-03-03 |
 +--------+----------+------------+----------+------------+
 4 rows in set (0.01 sec)
+
 mysql> SELECT *FROM EMPLOYEE WHERE EMP_NAME LIKE '%A' OR EMP_NAME LIKE '%E' OR EMP_NAME LIKE'%I' OR EMP_NAME LIKE '%O' OR EMP_NAME LIKE '%U';
 +--------+----------+------------+----------+------------+
 | EMP_ID | EMP_NAME | DEPARTMENT | SALARY   | JOIN_DATE  |
