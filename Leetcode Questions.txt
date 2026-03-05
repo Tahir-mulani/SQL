@@ -122,3 +122,10 @@ FROM Transactions
         GROUP BY month,country;
 		
 =============================================================================================
+
+Q.176
+(Second Highest Salary)
+SELECT Max(salary) AS SecondHighestSalary
+FROM Employee WHERE Salary < (SELECT MAX(salary) FROM Employee);
+
+=============================================================================
