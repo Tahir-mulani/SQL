@@ -124,7 +124,7 @@ mysql> select*from employee Where salary = (select Max(salary) from employee);
 |     11 | Pooja    |       1 |  90000 |      2016 |
 +--------+----------+---------+--------+-----------+
 
-Find employees who joined in the same year as employee with emp_id = 3.
+7)Find employees who joined in the same year as employee with emp_id = 3.
 mysql> select*from employee where join_year = (select join_year from employee where emp_id = 3);
 +--------+----------+---------+--------+-----------+
 | emp_id | emp_name | dept_id | salary | join_year |
@@ -135,7 +135,7 @@ mysql> select*from employee where join_year = (select join_year from employee wh
 +--------+----------+---------+--------+-----------+
 
 
-Display employees whose salary is greater than the salary of employee 'Rahul'.
+8)Display employees whose salary is greater than the salary of employee 'Rahul'.
 mysql> select*from employee where salary > (select salary from employee where emp_name = 'Rahul');
 +--------+----------+---------+--------+-----------+
 | emp_id | emp_name | dept_id | salary | join_year |
@@ -143,7 +143,7 @@ mysql> select*from employee where salary > (select salary from employee where em
 |     11 | Pooja    |       1 |  90000 |      2016 |
 +--------+----------+---------+--------+-----------+
 
-Find employees whose department id exists in the Department table.
+9)Find employees whose department id exists in the Department table.
 mysql> select*from employee e where exists(select dept_id from department d where d.dept_id = e.dept_id) order by e.emp_id;
 +--------+----------+---------+--------+-----------+
 | emp_id | emp_name | dept_id | salary | join_year |
@@ -162,7 +162,7 @@ mysql> select*from employee e where exists(select dept_id from department d wher
 |     12 | Manoj    |       5 |  45000 |      2023 |
 +--------+----------+---------+--------+-----------+
 
-Display employees who are working on a project with budget greater than 50000.
+10)Display employees who are working on a project with budget greater than 50000.
 mysql> select*from employee where emp_id IN(select emp_id from project where budget > 50000);
 +--------+----------+---------+--------+-----------+
 | emp_id | emp_name | dept_id | salary | join_year |
@@ -178,7 +178,7 @@ mysql> select*from employee where emp_id IN(select emp_id from project where bud
 |     10 | Vikram   |       6 |  30000 |      2021 |
 +--------+----------+---------+--------+-----------+
 
-Write a query to display employees whose salary is greater than the average salary of their department.
+11)Write a query to display employees whose salary is greater than the average salary of their department.
 mysql> select*from employee e Where salary > (select Avg(salary) from employee Where dept_id = e.dept_id);
 +--------+----------+---------+--------+-----------+
 | emp_id | emp_name | dept_id | salary | join_year |
@@ -191,20 +191,62 @@ mysql> select*from employee e Where salary > (select Avg(salary) from employee W
 +--------+----------+---------+--------+-----------+
 
 
-Find departments where no employee is assigned.
+12)Find departments where no employee is assigned.
+mysql> select dept_name from department where dept_id NOT IN (select dept_id from employee);
++------------+
+| dept_name  |
++------------+
+| Operations |
++------------+
+
+13)Display employees who earn more than the average salary of employees in 'IT' department.
+mysql> select*from employee Where salary>(select AVG(salary) from employee Where dept_id = (select dept_id from department where dept_name = 'IT'));
++--------+----------+---------+--------+-----------+
+| emp_id | emp_name | dept_id | salary | join_year |
++--------+----------+---------+--------+-----------+
+|      2 | Rahul    |       2 |  85000 |      2019 |
+|      3 | Sneha    |       3 |  70000 |      2018 |
+|      5 | Arjun    |       4 |  75000 |      2018 |
+|      8 | Rohit    |       3 |  72000 |      2018 |
+|     11 | Pooja    |       1 |  90000 |      2016 |
++--------+----------+---------+--------+-----------+
 
 
-Display employees who earn more than the average salary of employees in 'IT' department.
+14)Find employees who are working on the project with the highest budget.
+mysql> select*from employee where emp_id IN(select emp_id from project where budget =(select max(budget) from project));
++--------+----------+---------+--------+-----------+
+| emp_id | emp_name | dept_id | salary | join_year |
++--------+----------+---------+--------+-----------+
+|      9 | Anjali   |       2 |  55000 |      2022 |
++--------+----------+---------+--------+-----------+
 
+15)Display employees whose salary is higher than at least one employee in department 2.
+mysql> select*from employee where salary >ANY(select salary from employee where dept_id = 2);
++--------+----------+---------+--------+-----------+
+| emp_id | emp_name | dept_id | salary | join_year |
++--------+----------+---------+--------+-----------+
+|      1 | Amit     |       2 |  60000 |      2020 |
+|      2 | Rahul    |       2 |  85000 |      2019 |
+|      3 | Sneha    |       3 |  70000 |      2018 |
+|      5 | Arjun    |       4 |  75000 |      2018 |
+|      7 | Meena    |       5 |  65000 |      2017 |
+|      8 | Rohit    |       3 |  72000 |      2018 |
+|     11 | Pooja    |       1 |  90000 |      2016 |
++--------+----------+---------+--------+-----------+
 
-Find employees who are working on the project with the highest budget.
-
-
-Display employees whose salary is higher than at least one employee in department 2.
-
-
-Find employees whose salary is less than the maximum salary in their department.
-
+16)Find employees whose salary is less than the maximum salary in their department.
+mysql> select *from employee e where salary < (select Max(salary) from employee where e.dept_id = dept_id);
++--------+----------+---------+--------+-----------+
+| emp_id | emp_name | dept_id | salary | join_year |
++--------+----------+---------+--------+-----------+
+|      1 | Amit     |       2 |  60000 |      2020 |
+|      3 | Sneha    |       3 |  70000 |      2018 |
+|      4 | Priya    |       1 |  50000 |      2021 |
+|      6 | Kiran    |       4 |  40000 |      2023 |
+|      9 | Anjali   |       2 |  55000 |      2022 |
+|     10 | Vikram   |       4 |  30000 |      2021 |
+|     12 | Manoj    |       5 |  45000 |      2023 |
++--------+----------+---------+--------+-----------+
 
 Display employees who work in departments located in the same location as the 'Sales' department.
 
