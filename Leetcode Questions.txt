@@ -129,3 +129,23 @@ SELECT Max(salary) AS SecondHighestSalary
 FROM Employee WHERE Salary < (SELECT MAX(salary) FROM Employee);
 
 =============================================================================
+
+Q1378
+(Replace Employee ID  with the unique identifier)
+select emp.unique_id AS unique_id,e.name from Employees e LEFT JOIN EmployeeUNI emp ON e.id = emp.id ;
+
+========================================================================================================
+
+Q1661
+(Average Time of Process per Machine)
+SELECT m.machine_id,
+       ROUND(AVG(p.timestamp - m.timestamp),3) AS processing_time
+FROM activity m
+JOIN activity p
+ON m.machine_id = p.machine_id
+AND m.process_id = p.process_id
+AND m.activity_type = 'start'
+AND p.activity_type = 'end'
+GROUP BY m.machine_id;
+
+=========================================================================================================
