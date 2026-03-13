@@ -1,0 +1,100 @@
+-----  VIEWS  -------
+
+Views 
+___________________________________________________________________
+View is a same like as virtual table in SQL and created using a select command 
+It does not store data physically but displays data stored in underlying tables.
+
+Q. Why use a view if you have a table ?
+_____________________________________________________________
+To provide table data security : means we do not provide complete table access just we provide particular column access 
+to the table using view.
+
+To hide the complex queries : means if we have some joins or some subqueries then we can hide them in view so 
+the end user or developer does not need to write complex query just execute view then internally complex query get executed.
+
+How to create view practically 
+___________________________________________________
+Syntax: create view viewname as select query;
+
+mysql> create view empview AS select emp_id,emp_name from employee;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select*from empview;
++--------+----------+
+| emp_id | emp_name |
++--------+----------+
+|      1 | Emp1     |
+|      2 | Emp2     |
+|      3 | Emp3     |
+|      4 | Emp4     |
+|      5 | Emp5     |
+|      6 | Emp6     |
+|      7 | Emp7     |
+|      8 | Emp8     |
+|      9 | Emp9     |
+|     10 | Emp10    |
++--------+----------+
+
+mysql> create view employe_details As select e.emp_id,e.emp_name,d.dept_name,d.location,e.salary,e.join_date from employee e INNER JOIN department d ON e.dept_id = d.dept_id;
+Query OK, 0 rows affected (0.01 sec)
+mysql> select*from employe_details order by emp_id;
++--------+----------+-----------+-----------+--------+------------+
+| emp_id | emp_name | dept_name | location  | salary | join_date  |
++--------+----------+-----------+-----------+--------+------------+
+|      1 | Emp1     | HR        | Mumbai    |  45000 | 2020-02-10 |
+|      2 | Emp2     | IT        | Pune      |  60000 | 2019-05-11 |
+|      3 | Emp3     | Finance   | Delhi     |  75000 | 2018-03-01 |
+|      4 | Emp4     | Sales     | Mumbai    |  52000 | 2021-07-15 |
+|      5 | Emp5     | IT        | Pune      |  68000 | 2022-08-21 |
+|      6 | Emp6     | Marketing | Bangalore |  47000 | 2017-04-10 |
+|      7 | Emp7     | Finance   | Delhi     |  82000 | 2020-12-02 |
+|      8 | Emp8     | HR        | Mumbai    |  50000 | 2021-03-20 |
+|      9 | Emp9     | Sales     | Mumbai    |  61000 | 2019-06-19 |
+|     10 | Emp10    | IT        | Pune      |  72000 | 2018-01-25 |
++--------+----------+-----------+-----------+--------+------------+
+
+
+mysql> select*from empview;
++--------+----------+
+| emp_id | emp_name |
++--------+----------+
+|      1 | Emp1     |
+|      2 | Emp2     |
+|      3 | Emp3     |
+|      4 | Emp4     |
+|      5 | Emp5     |
+|      6 | Emp6     |
+|      7 | Emp7     |
+|      8 | Emp8     |
+|      9 | Emp9     |
+|     10 | Emp10    |
++--------+----------+
+10 rows in set (0.00 sec)
+
+Note: you can perform updation and deletion by view on table 
+Example: we delete employee table data using id by view 
+
+
+
+*You can update table record or column using view*
+mysql> update empview set emp_name ='Siddharth' Where emp_id = 5;
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from empview;
++--------+-----------+
+| emp_id | emp_name  |
++--------+-----------+
+|      1 | Emp1      |
+|      2 | Emp2      |
+|      3 | Emp3      |
+|      4 | Emp4      |
+|      5 | Siddharth |
+|      6 | Emp6      |
+|      7 | Emp7      |
+|      8 | Emp8      |
+|      9 | Emp9      |
+|     10 | Emp10     |
++--------+-----------+
+
