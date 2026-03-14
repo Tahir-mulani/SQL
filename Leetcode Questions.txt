@@ -171,3 +171,11 @@ End AS type
 FROM Tree;
 
 ========================================================================================================
+
+Q570(Managers with at least 5 direct Reports)
+select name from Employee Where id 
+IN
+(select managerID from employee GROUP by managerId
+                  Having COUNT(managerId)>=5);
+
+=======================================================================================================	
