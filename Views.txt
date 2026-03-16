@@ -13,6 +13,14 @@ to the table using view.
 To hide the complex queries : means if we have some joins or some subqueries then we can hide them in view so 
 the end user or developer does not need to write complex query just execute view then internally complex query get executed.
 
+-  we can update column of table by view but we can perform operation on column those present in view.
+
+Drop view : if we want to drop view or delete view we have following command 
+Syntax:  drop view viewname;
+Example: drop view empview;
+Update view: if we want to update view means modify existing view we have command 
+Syntax: create or replace view viewname as select statement;
+
 How to create view practically 
 ___________________________________________________
 Syntax: create view viewname as select query;
