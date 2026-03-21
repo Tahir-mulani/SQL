@@ -117,7 +117,7 @@ USE databasename;
 
 **Example:**
 ```sql
-USE employee_db;
+USE employee_db ;
 ```
 
 ---
